@@ -18,7 +18,7 @@ import numpy as np
 from ultralytics import YOLOv10
 
 # Set event loop policy for Windows
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+# asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 # Initialize the logger
 logging.basicConfig(level=logging.INFO)
