@@ -8,3 +8,5 @@ pypi-json
 ultralytics
 python-multipart
 opencv-python
+huggingface_hub
+git+https://github.com/THU-MIG/yolov10.git
