@@ -64,6 +64,11 @@ def predict(image):
 async def health_check():
     return "The health check is successful!"
 
+
+@app.get("/health")
+async def health_check():
+    return "The health check is successful!"
+
 @app.post("/predict/")
 async def predict_image(file: UploadFile = File(...)):
     try:
