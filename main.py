@@ -16,6 +16,8 @@ import io
 from PIL import Image
 import numpy as np
 from ultralytics import YOLOv10
+from PIL import ImageOps
+
 
 # Set event loop policy for Windows
 # asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -30,7 +32,7 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust to your needs
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -44,14 +46,22 @@ model = YOLOv10(model_path)
 # Define the prediction function
 def predict(image):
     try:
-        logger.info("Converting uploaded image to RGB format")
+ logger.info("Converting uploaded image to RGB format")
         image = Image.open(io.BytesIO(image)).convert("RGB")
+
+        # Resize the image to 640x640 before converting to a numpy array
+        logger.info("Resizing the image to 640x640")
+        image = ImageOps.fit(image, (640, 640), Image.ANTIALIAS)
+        
         image = np.array(image)
+
         logger.info("Running YOLOv10 model prediction")
         result = model.predict(source=image, imgsz=640, conf=0.25)
+
         logger.info("Annotating the image with YOLOv10 predictions")
         annotated_img = result[0].plot()
         annotated_img = Image.fromarray(annotated_img[:, :, ::-1])
+
         img_byte_arr = io.BytesIO()
         annotated_img.save(img_byte_arr, format='JPEG')
         return img_byte_arr.getvalue()
