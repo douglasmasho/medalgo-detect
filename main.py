@@ -51,7 +51,7 @@ def predict(image):
 
         # Resize the image to 640x640 before converting to a numpy array
         logger.info("Resizing the image to 640x640")
-        image = ImageOps.fit(image, (640, 640), Image.ANTIALIAS)
+        image = ImageOps.fit(image, (640, 640), Image.LANCZOS)  # Use LANCZOS instead of ANTIALIAS
         
         image = np.array(image)
 
