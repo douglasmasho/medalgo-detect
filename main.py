@@ -46,7 +46,7 @@ model = YOLOv10(model_path)
 # Define the prediction function
 def predict(image):
     try:
- logger.info("Converting uploaded image to RGB format")
+        logger.info("Converting uploaded image to RGB format")
         image = Image.open(io.BytesIO(image)).convert("RGB")
 
         # Resize the image to 640x640 before converting to a numpy array
